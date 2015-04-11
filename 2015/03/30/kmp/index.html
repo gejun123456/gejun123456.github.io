@@ -8,7 +8,7 @@
   <title>KMP算法学习 | Bruce&#39;s blog</title>
   <meta name="author" content="Bruce ge">
   
-  <meta name="description" content="如何学习">
+  <meta name="description" content="可以先看字符串匹配的KMP算法针对第16张图的我的理解如下">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -228,8 +228,82 @@
     </header>
     <div class="entry">
       
-        <p>如何学习<br><a id="more"></a></p>
-<p>KMP算法是什么</p>
+        <hr>
+<p>可以先看<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="external">字符串匹配的KMP算法</a><br>针对第16张图的我的理解如下<br><img src="http://image.beekka.com/blog/201305/bg2013050112.png" alt="kmp图"><br><a id="more"></a><br>当上面的C与下面的D不能进行匹配的时候<br>只可能有两种情况</p>
+<ol>
+<li>C在匹配的字符串中</li>
+<li>C不在匹配的字符串中</li>
+</ol>
+<p>由于目标是进行匹配，需要最小的移位达到最大的匹配<br>即需要C这个字符能和下面的字符串实现最大的匹配<br>即C的前缀与下面字符串的前缀达到最大的匹配<br>由于下面部分<strong>ABCDAB</strong>已经和上面匹配了<br>可以归到照下面的<strong>ABCDAB</strong>的最大匹配<br>即寻找<strong>ABCDAB</strong>的前缀与后缀的最大匹配<br>并且需要前缀的后面一位等于当前字符即<strong>C</strong><br>对于该字符串最大前缀便是<strong>AB</strong>，并且其后一位等于<strong>C</strong>则匹配到其上</p>
+<h1 id="算法实现">算法实现</h1><p>问题转化为下面一个字符串的问题，当D不能和上面进行匹配时，需要找到一个前缀最大匹配的后一位去和上面的字符串比较<br>问题变成了:<br>当下面的字符串<strong>ABCDABD</strong>中的某一位与上面字符串不能匹配时，该选择哪一位去与上面的字符串进行匹配保证最大匹配<br>这时要想怎么去做了<br>一种做法是拿当前字符的每个前缀去和这个字符串的前缀去比较拿到一个最大的<br>但时间复杂度较高，显然不好<br>可以看到，当前字符前缀的最大匹配只依赖于其前面的字符，可以发现这是一个动态规划的问题<br>可以以next[i]表示当前下标为i不匹配时，需要与上面字符比较的下一个的下标<br>next[0]=-1 即第0位不匹配时，下面没有字符串与上面字符串匹配<br>即上面字符串的当前位不属于匹配的字符串中<br>给出算法实现如下</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getNext(String pattern) {
+    <span class="keyword">int</span>[] <span class="keyword">next</span> = <span class="keyword">new</span> <span class="keyword">int</span>[pattern.length()];
+    <span class="keyword">next</span>[<span class="number">0</span>] = -<span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pattern.length(); i++) {
+        <span class="keyword">int</span> j = i - <span class="number">1</span>;
+        <span class="keyword">while</span> (<span class="keyword">next</span>[j] != -<span class="number">1</span> &amp;&amp; !(pattern.charAt(j) == pattern.charAt(<span class="keyword">next</span>[j]))) {
+            j = <span class="keyword">next</span>[j];
+        }
+        <span class="keyword">next</span>[i] = <span class="keyword">next</span>[j] + <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">next</span>;
+}
+</code></pre><p>画个图就比较好理解了<br>然后就可以用next数组了<br>完整程序如下</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> KmpAgain {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Boolean</span> kmp(String pattern, String src) {
+        <span class="keyword">int</span> <span class="keyword">next</span>[] = getNext(pattern);
+        <span class="keyword">int</span> len1 = pattern.length();
+        <span class="keyword">int</span> len2 = src.length();
+        <span class="keyword">int</span> i = <span class="number">0</span>;
+        <span class="keyword">int</span> j = <span class="number">0</span>;
+        <span class="keyword">while</span> (i &lt; len2 &amp;&amp; j &lt; len1) {
+            <span class="keyword">while</span> (i &lt; len2 &amp;&amp; j &lt; len1 &amp;&amp; src.charAt(i) == pattern.charAt(j)) {
+                j++;
+                i++;
+            }
+            <span class="keyword">if</span> (j == len1) {
+                <span class="keyword">return</span> <span class="keyword">true</span>;
+            }
+            <span class="keyword">do</span> {
+                j = <span class="keyword">next</span>[j];
+            }
+            <span class="keyword">while</span> (j != -<span class="number">1</span> &amp;&amp; src.charAt(i) != pattern.charAt(j));
+            <span class="keyword">if</span> (j == -<span class="number">1</span>) {
+                i = i + <span class="number">1</span>;
+                j = <span class="number">0</span>;
+            }
+        }
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+
+    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getNext(String pattern) {
+        <span class="keyword">int</span>[] <span class="keyword">next</span> = <span class="keyword">new</span> <span class="keyword">int</span>[pattern.length()];
+        <span class="keyword">next</span>[<span class="number">0</span>] = -<span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pattern.length(); i++) {
+            <span class="keyword">int</span> j = i - <span class="number">1</span>;
+            <span class="keyword">while</span> (<span class="keyword">next</span>[j] != -<span class="number">1</span> &amp;&amp; !(pattern.charAt(j) == pattern.charAt(<span class="keyword">next</span>[j]))) {
+                j = <span class="keyword">next</span>[j];
+            }
+            <span class="keyword">next</span>[i] = <span class="keyword">next</span>[j] + <span class="number">1</span>;
+        }
+        <span class="keyword">return</span> <span class="keyword">next</span>;
+    }
+}
+
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getNext(String pattern) {
+    <span class="keyword">int</span>[] <span class="keyword">next</span> = <span class="keyword">new</span> <span class="keyword">int</span>[pattern.length()];
+    <span class="keyword">next</span>[<span class="number">0</span>] = -<span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pattern.length(); i++) {
+        <span class="keyword">int</span> j = i - <span class="number">1</span>;
+        <span class="keyword">while</span> (<span class="keyword">next</span>[j] != -<span class="number">1</span> &amp;&amp; !(pattern.charAt(j) == pattern.charAt(<span class="keyword">next</span>[j]))) {
+            j = <span class="keyword">next</span>[j];
+        }
+        <span class="keyword">next</span>[i] = <span class="keyword">next</span>[j] + <span class="number">1</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">next</span>;
+    }
+}
+</code></pre><p>第一篇博客，写的比较抽象。</p>
 
       
     </div>
