@@ -5,13 +5,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档：2015/3 | Bruce&#39;s blog</title>
+  <title>centos安装java环境 | Bruce&#39;s blog</title>
   <meta name="author" content="Bruce ge">
+  
+  <meta name="description" content="安装了好几次，懒得每次都去找一遍，记下来
+安装tomcat  
+安装mysql
+搭建ftp服务器
+tomcat部署web项目
+跳转到80端口
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="centos安装java环境"/>
   <meta property="og:site_name" content="Bruce&#39;s blog"/>
 
   
@@ -198,25 +206,113 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title">2015/3</h2>
-
-
-  <div class="archive">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
     
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2015-03-30T13:44:23.000Z"><a href="/2015/03/30/kmp/">2015-03-30</a></time>
-            
-              <h1 class="title"><a href="/2015/03/30/kmp/">KMP算法学习</a></h1>
-            
-          </header>
-        </div>
-      </article>
+      <img src="">
     
   </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-04-12T02:38:00.000Z"><a href="/2015/04/12/centosInstall/">2015-04-12</a></time>
+      
+      
+  
+    <h1 class="title">centos安装java环境</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>安装了好几次，懒得每次都去找一遍，记下来</p>
+<p><a href="https://www.howtoforge.com/how-to-install-tomcat-on-centos-7" target="_blank" rel="external">安装tomcat</a>  </p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-centos-6" target="_blank" rel="external">安装mysql</a></p>
+<p><a href="http://www.2cto.com/os/201502/375925.html" target="_blank" rel="external">搭建ftp服务器</a></p>
+<p><a href="http://dbajun.iteye.com/blog/2050243" target="_blank" rel="external">tomcat部署web项目</a></p>
+<p>跳转到80端口</p>
+<pre><code><span class="comment">iptables</span> <span class="literal">-</span><span class="comment">t</span> <span class="comment">nat</span> <span class="literal">-</span><span class="comment">A</span> <span class="comment">PREROUTING</span> <span class="literal">-</span><span class="comment">p</span> <span class="comment">tcp</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">dport</span> <span class="comment">80</span> <span class="literal">-</span><span class="comment">j</span> <span class="comment">REDIRECT</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">to</span><span class="literal">-</span><span class="comment">port</span> <span class="comment">8080</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/linux/">linux</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/linux/">linux</a>
+  </div>
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=3326447" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+ <nav id="pagination" >
+    
+    <a href="/2015/04/21/jvm/" class="alignleft prev" >上一页</a>
+    
+    
+    <a href="/2015/03/30/kmp/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+<section id="comment">
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zippera"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->  
+
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
